@@ -1,0 +1,732 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ZRISK - Zero Risk. Maximum Chaos.</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800;900&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        :root {
+            --neon-purple: #9D00FF;
+            --neon-pink: #FF00AA;
+            --neon-green: #39FF14;
+            --gold: #FFD700;
+            --dark: #0a0a0a;
+            --darker: #050505;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: var(--darker);
+            color: #fff;
+            overflow-x: hidden;
+            min-height: 100vh;
+        }
+
+        /* Particles */
+        .particles {
+            position: fixed;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            pointer-events: none;
+            z-index: 0;
+            overflow: hidden;
+        }
+        .particle {
+            position: absolute;
+            width: 4px; height: 4px;
+            border-radius: 50%;
+            opacity: 0.3;
+            animation: float 15s infinite ease-in-out;
+        }
+        @keyframes float {
+            0%, 100% { transform: translateY(100vh) rotate(0deg); opacity: 0; }
+            10% { opacity: 0.3; }
+            90% { opacity: 0.3; }
+            100% { transform: translateY(-10vh) rotate(720deg); opacity: 0; }
+        }
+
+        /* Hero */
+        .hero {
+            position: relative; z-index: 1;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 2rem;
+            background: radial-gradient(ellipse at center, rgba(157,0,255,0.15) 0%, transparent 70%);
+        }
+        .logo-container {
+            position: relative;
+            margin-bottom: 2rem;
+        }
+        .logo-glow {
+            position: absolute;
+            top: 50%; left: 50%;
+            transform: translate(-50%, -50%);
+            width: 300px; height: 300px;
+            background: radial-gradient(circle, var(--neon-green) 0%, transparent 70%);
+            opacity: 0.3;
+            animation: pulse-glow 3s ease-in-out infinite;
+            border-radius: 50%;
+        }
+        @keyframes pulse-glow {
+            0%, 100% { transform: translate(-50%, -50%) scale(1); opacity: 0.3; }
+            50% { transform: translate(-50%, -50%) scale(1.2); opacity: 0.5; }
+        }
+        .logo-img {
+            position: relative;
+            width: 200px; height: 200px;
+            border-radius: 50%;
+            border: 4px solid var(--neon-green);
+            box-shadow: 0 0 40px var(--neon-green), inset 0 0 40px rgba(57,255,20,0.2);
+            animation: logo-float 4s ease-in-out infinite;
+            object-fit: cover;
+            background: var(--dark);
+        }
+        @keyframes logo-float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-20px); }
+        }
+        .ticker {
+            font-family: 'Space Mono', monospace;
+            font-size: 1.2rem;
+            color: var(--neon-green);
+            letter-spacing: 0.3em;
+            margin-bottom: 1rem;
+            text-shadow: 0 0 20px var(--neon-green);
+        }
+        h1 {
+            font-size: clamp(3rem, 10vw, 7rem);
+            font-weight: 900;
+            line-height: 1;
+            margin-bottom: 1rem;
+            background: linear-gradient(135deg, var(--gold) 0%, var(--neon-green) 50%, var(--neon-pink) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            text-transform: uppercase;
+            letter-spacing: -0.02em;
+            animation: shimmer 3s ease-in-out infinite;
+        }
+        @keyframes shimmer {
+            0%, 100% { filter: brightness(1); }
+            50% { filter: brightness(1.3); }
+        }
+        .tagline {
+            font-size: clamp(1.2rem, 3vw, 1.8rem);
+            color: #aaa;
+            max-width: 600px;
+            margin-bottom: 2rem;
+            font-weight: 400;
+        }
+        .tagline span { color: var(--neon-green); font-weight: 700; }
+        .cta-buttons {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+            justify-content: center;
+            margin-bottom: 3rem;
+        }
+        .btn {
+            padding: 1rem 2.5rem;
+            border-radius: 50px;
+            font-family: 'Space Mono', monospace;
+            font-weight: 700;
+            font-size: 1rem;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            border: 2px solid;
+            position: relative;
+            overflow: hidden;
+        }
+        .btn-primary {
+            background: var(--neon-green);
+            color: var(--dark);
+            border-color: var(--neon-green);
+            box-shadow: 0 0 30px rgba(57,255,20,0.4);
+        }
+        .btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 0 50px rgba(57,255,20,0.6);
+        }
+        .btn-secondary {
+            background: transparent;
+            color: var(--neon-pink);
+            border-color: var(--neon-pink);
+            box-shadow: 0 0 20px rgba(255,0,170,0.2);
+        }
+        .btn-secondary:hover {
+            background: rgba(255,0,170,0.1);
+            transform: translateY(-3px);
+            box-shadow: 0 0 40px rgba(255,0,170,0.4);
+        }
+        .contract-box {
+            background: rgba(255,255,255,0.03);
+            border: 1px solid rgba(57,255,20,0.3);
+            border-radius: 16px;
+            padding: 1.5rem 2rem;
+            backdrop-filter: blur(10px);
+            max-width: 600px;
+            width: 100%;
+            margin-bottom: 2rem;
+        }
+        .contract-label {
+            font-family: 'Space Mono', monospace;
+            font-size: 0.75rem;
+            color: var(--neon-green);
+            text-transform: uppercase;
+            letter-spacing: 0.2em;
+            margin-bottom: 0.5rem;
+        }
+        .contract-address {
+            font-family: 'Space Mono', monospace;
+            font-size: 0.9rem;
+            color: #fff;
+            word-break: break-all;
+            cursor: pointer;
+            transition: color 0.3s;
+        }
+        .contract-address:hover { color: var(--neon-green); }
+        .contract-hint {
+            font-size: 0.75rem;
+            color: #666;
+            margin-top: 0.5rem;
+        }
+        .stats {
+            display: flex;
+            gap: 3rem;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin-bottom: 3rem;
+        }
+        .stat { text-align: center; }
+        .stat-value {
+            font-family: 'Space Mono', monospace;
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: var(--gold);
+            text-shadow: 0 0 20px rgba(255,215,0,0.3);
+        }
+        .stat-label {
+            font-size: 0.85rem;
+            color: #888;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            margin-top: 0.3rem;
+        }
+
+        /* Features */
+        .features {
+            position: relative; z-index: 1;
+            padding: 6rem 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        .section-title {
+            font-size: clamp(2rem, 5vw, 3rem);
+            font-weight: 900;
+            text-align: center;
+            margin-bottom: 4rem;
+            color: #fff;
+        }
+        .section-title span { color: var(--neon-green); }
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
+        }
+        .feature-card {
+            background: rgba(255,255,255,0.02);
+            border: 1px solid rgba(255,255,255,0.08);
+            border-radius: 20px;
+            padding: 2.5rem;
+            transition: all 0.4s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        .feature-card::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0;
+            width: 100%; height: 3px;
+            background: linear-gradient(90deg, var(--neon-purple), var(--neon-pink), var(--neon-green));
+            opacity: 0;
+            transition: opacity 0.4s;
+        }
+        .feature-card:hover::before { opacity: 1; }
+        .feature-card:hover {
+            transform: translateY(-10px);
+            border-color: rgba(57,255,20,0.3);
+            box-shadow: 0 20px 60px rgba(0,0,0,0.5);
+        }
+        .feature-icon { font-size: 3rem; margin-bottom: 1.5rem; }
+        .feature-title { font-size: 1.5rem; font-weight: 800; margin-bottom: 1rem; color: #fff; }
+        .feature-desc { color: #aaa; line-height: 1.7; font-size: 1rem; }
+
+        /* LIVE FEED SECTION */
+        .live-feed {
+            position: relative; z-index: 1;
+            padding: 6rem 2rem;
+            background: linear-gradient(180deg, transparent 0%, rgba(157,0,255,0.05) 50%, transparent 100%);
+        }
+        .feed-container {
+            max-width: 900px;
+            margin: 0 auto;
+            background: rgba(255,255,255,0.02);
+            border: 1px solid rgba(57,255,20,0.2);
+            border-radius: 24px;
+            padding: 2rem;
+            backdrop-filter: blur(10px);
+        }
+        .feed-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 1.5rem;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+        .feed-title {
+            font-family: 'Space Mono', monospace;
+            font-size: 1rem;
+            color: var(--neon-green);
+            text-transform: uppercase;
+            letter-spacing: 0.2em;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        .live-dot {
+            width: 10px; height: 10px;
+            background: var(--neon-green);
+            border-radius: 50%;
+            animation: live-pulse 1.5s ease-in-out infinite;
+            box-shadow: 0 0 10px var(--neon-green);
+        }
+        @keyframes live-pulse {
+            0%, 100% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.5; transform: scale(1.3); }
+        }
+        .feed-username {
+            font-family: 'Space Mono', monospace;
+            font-size: 0.85rem;
+            color: #888;
+        }
+        .feed-username a {
+            color: var(--neon-pink);
+            text-decoration: none;
+        }
+        .feed-username a:hover { text-decoration: underline; }
+
+        /* Twitter timeline embed styling */
+        .twitter-feed-wrapper {
+            border-radius: 16px;
+            overflow: hidden;
+            min-height: 500px;
+            background: rgba(0,0,0,0.3);
+        }
+
+        /* Setup instructions */
+        .setup-box {
+            background: rgba(255,255,255,0.03);
+            border: 1px dashed rgba(255,255,255,0.15);
+            border-radius: 16px;
+            padding: 2rem;
+            margin-top: 2rem;
+            text-align: center;
+        }
+        .setup-box h3 {
+            font-family: 'Space Mono', monospace;
+            font-size: 1rem;
+            color: var(--gold);
+            margin-bottom: 1rem;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+        }
+        .setup-box p {
+            color: #888;
+            font-size: 0.9rem;
+            line-height: 1.7;
+            max-width: 600px;
+            margin: 0 auto 1.5rem;
+        }
+
+        /* Roadmap */
+        .roadmap {
+            position: relative; z-index: 1;
+            padding: 6rem 2rem;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        .roadmap-item {
+            display: flex;
+            gap: 2rem;
+            margin-bottom: 3rem;
+            position: relative;
+        }
+        .roadmap-item::before {
+            content: '';
+            position: absolute;
+            left: 24px; top: 50px;
+            width: 2px;
+            height: calc(100% + 1rem);
+            background: linear-gradient(180deg, var(--neon-green), transparent);
+        }
+        .roadmap-item:last-child::before { display: none; }
+        .roadmap-dot {
+            width: 50px; height: 50px;
+            border-radius: 50%;
+            background: var(--dark);
+            border: 3px solid var(--neon-green);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: 'Space Mono', monospace;
+            font-weight: 700;
+            color: var(--neon-green);
+            flex-shrink: 0;
+            box-shadow: 0 0 20px rgba(57,255,20,0.3);
+        }
+        .roadmap-content h3 { font-size: 1.3rem; margin-bottom: 0.5rem; color: #fff; }
+        .roadmap-content p { color: #888; line-height: 1.6; }
+
+        /* Footer */
+        .footer {
+            position: relative; z-index: 1;
+            padding: 4rem 2rem;
+            text-align: center;
+            border-top: 1px solid rgba(255,255,255,0.05);
+        }
+        .social-links {
+            display: flex;
+            gap: 1.5rem;
+            justify-content: center;
+            margin-bottom: 2rem;
+        }
+        .social-link {
+            width: 50px; height: 50px;
+            border-radius: 50%;
+            border: 2px solid rgba(255,255,255,0.2);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #fff;
+            text-decoration: none;
+            font-size: 1.2rem;
+            transition: all 0.3s ease;
+        }
+        .social-link:hover {
+            border-color: var(--neon-green);
+            color: var(--neon-green);
+            box-shadow: 0 0 30px rgba(57,255,20,0.3);
+            transform: translateY(-5px);
+        }
+        .disclaimer {
+            font-family: 'Space Mono', monospace;
+            font-size: 0.75rem;
+            color: #555;
+            max-width: 600px;
+            margin: 0 auto;
+            line-height: 1.8;
+        }
+        .disclaimer span { color: var(--neon-pink); }
+
+        /* Animations */
+        .fade-in {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.8s ease;
+        }
+        .fade-in.visible { opacity: 1; transform: translateY(0); }
+
+        /* Marquee */
+        .marquee {
+            overflow: hidden;
+            white-space: nowrap;
+            padding: 1rem 0;
+            background: rgba(57,255,20,0.05);
+            border-top: 1px solid rgba(57,255,20,0.2);
+            border-bottom: 1px solid rgba(57,255,20,0.2);
+            position: relative; z-index: 1;
+        }
+        .marquee-content {
+            display: inline-block;
+            animation: marquee 20s linear infinite;
+            font-family: 'Space Mono', monospace;
+            font-size: 0.9rem;
+            color: var(--neon-green);
+            letter-spacing: 0.1em;
+        }
+        @keyframes marquee {
+            0% { transform: translateX(0); }
+            100% { transform: translateX(-50%); }
+        }
+
+        @media (max-width: 768px) {
+            .stats { gap: 2rem; }
+            .stat-value { font-size: 1.8rem; }
+            .cta-buttons { flex-direction: column; width: 100%; }
+            .btn { width: 100%; text-align: center; }
+            .roadmap-item { gap: 1rem; }
+            .feed-header { flex-direction: column; align-items: flex-start; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Particles -->
+    <div class="particles" id="particles"></div>
+
+    <!-- Marquee -->
+    <div class="marquee">
+        <div class="marquee-content">
+            ZERO RISK /// ZERO UTILITY /// ZERO ROADMAP /// ZERO TEAM /// ZERO PROMISES /// PURE CHAOS /// CREATOR FEES ONLY /// 
+            ZERO RISK /// ZERO UTILITY /// ZERO ROADMAP /// ZERO TEAM /// ZERO PROMISES /// PURE CHAOS /// CREATOR FEES ONLY /// 
+        </div>
+    </div>
+
+    <!-- Hero -->
+    <section class="hero">
+        <div class="logo-container">
+            <div class="logo-glow"></div>
+            <img src="logo.png" alt="ZRISK Logo" class="logo-img" id="logoImg">
+        </div>
+        
+        <div class="ticker">$ZRISK // SOLANA</div>
+        <h1>ZERO RISK</h1>
+        
+        <p class="tagline">
+            Deployed for <span>$0.01</span>. No utility. No roadmap. No promises. 
+            Just pure creator fees and absolute chaos. The ultimate <span>zero-risk</span> experiment.
+        </p>
+        
+        <div class="cta-buttons">
+            <a href="#" class="btn btn-primary" id="buyBtn">BUY $ZRISK</a>
+            <a href="https://pump.fun" target="_blank" class="btn btn-secondary">VIEW ON PUMP.FUN</a>
+        </div>
+        
+        <div class="contract-box">
+            <div class="contract-label">Token Contract Address</div>
+            <div class="contract-address" id="ca" onclick="copyCA()">
+                [DEPLOY TO SEE ADDRESS]
+            </div>
+            <div class="contract-hint">Click to copy &bull; Paste into Phantom to swap</div>
+        </div>
+        
+        <div class="stats">
+            <div class="stat">
+                <div class="stat-value">$0.01</div>
+                <div class="stat-label">Deployment Cost</div>
+            </div>
+            <div class="stat">
+                <div class="stat-value">0.3%</div>
+                <div class="stat-label">Creator Fee</div>
+            </div>
+            <div class="stat">
+                <div class="stat-value">0</div>
+                <div class="stat-label">Utility</div>
+            </div>
+            <div class="stat">
+                <div class="stat-value">&#8734;</div>
+                <div class="stat-label">Chaos</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features -->
+    <section class="features">
+        <h2 class="section-title fade-in">Why <span>Zero</span>?</h2>
+        
+        <div class="features-grid">
+            <div class="feature-card fade-in">
+                <div class="feature-icon">&#128683;</div>
+                <h3 class="feature-title">Zero Utility</h3>
+                <p class="feature-desc">We don't pretend to solve world hunger or revolutionize DeFi. This is a meme. Nothing more, nothing less. The utility is the joke.</p>
+            </div>
+            <div class="feature-card fade-in">
+                <div class="feature-icon">&#128506;&#65039;</div>
+                <h3 class="feature-title">Zero Roadmap</h3>
+                <p class="feature-desc">No phases. No milestones. No "Q4 2027 metaverse integration." We go where the chaos takes us. That's the roadmap.</p>
+            </div>
+            <div class="feature-card fade-in">
+                <div class="feature-icon">&#128101;</div>
+                <h3 class="feature-title">Zero Team</h3>
+                <p class="feature-desc">One person. One laptop. One dream of passive income from creator fees. No devs, no marketers, no VCs. Just vibes.</p>
+            </div>
+            <div class="feature-card fade-in">
+                <div class="feature-icon">&#128176;</div>
+                <h3 class="feature-title">Maximum Fees</h3>
+                <p class="feature-desc">0.3% from every trade on bonding curve. Up to 0.95% after graduation. The creator is transparent: this is a fee farm. And you're invited.</p>
+            </div>
+            <div class="feature-card fade-in">
+                <div class="feature-icon">&#127917;</div>
+                <h3 class="feature-title">Pure Meme</h3>
+                <p class="feature-desc">Meet Zero, the mascot. A golden donut with dollar-sign eyes and zero chill. He lives for the fees, dies for the memes, and transcends the game.</p>
+            </div>
+            <div class="feature-card fade-in">
+                <div class="feature-icon">&#128293;</div>
+                <h3 class="feature-title">Absolute Chaos</h3>
+                <p class="feature-desc">No guarantees. No safes. No locks. Just a token on Solana doing what memecoins do best: going up, going down, and making legends.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- LIVE FEED FROM X -->
+    <section class="live-feed">
+        <h2 class="section-title fade-in">Live from <span>X</span></h2>
+        
+        <div class="feed-container fade-in">
+            <div class="feed-header">
+                <div class="feed-title">
+                    <span class="live-dot"></span>
+                    AUTO-UPDATING FEED
+                </div>
+                <div class="feed-username">
+                    @<a href="https://x.com/zrisk_coin" id="twitterLink">zrisk_coin</a> &bull; Updates in real-time
+                </div>
+            </div>
+            
+            <!-- Twitter Timeline Embed -->
+            <div class="twitter-feed-wrapper" id="twitterFeed">
+                <a class="twitter-timeline" 
+                   data-height="500" 
+                   data-theme="dark"
+                   data-chrome="noheader nofooter noborders transparent"
+                   href="https://twitter.com/zrisk_coin?ref_src=twsrc%5Etfw">
+                   Tweets by zrisk_coin
+                </a>
+                <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+            </div>
+            
+            <!-- Setup Instructions -->
+            <div class="setup-box">
+                <h3>&#9881;&#65039; Auto-Feed Active</h3>
+                <p>Every photo you post on <strong>@zrisk_coin</strong> appears here automatically.</p>
+                
+                <p style="margin-top:1.5rem; color:#888; font-size:0.85rem;">
+                    <strong style="color:var(--neon-pink);">Pro tip:</strong> Use hashtag <strong style="color:var(--neon-green);">#ZRISK</strong> in every tweet. 
+                    Visitors can click it to see all community posts.
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Roadmap -->
+    <section class="roadmap">
+        <h2 class="section-title fade-in">The <span>Roadmap</span> (Satire)</h2>
+        
+        <div class="roadmap-item fade-in">
+            <div class="roadmap-dot">0</div>
+            <div class="roadmap-content">
+                <h3>Phase Zero: Deploy</h3>
+                <p>Spend $0.01 on gas. Create token. Turn on Creator Fees. Post first tweet. Question life choices.</p>
+            </div>
+        </div>
+        <div class="roadmap-item fade-in">
+            <div class="roadmap-dot">1</div>
+            <div class="roadmap-content">
+                <h3>Phase One: Shill</h3>
+                <p>Post 50 tweets. Spam Telegram. Go live on Pump.fun. Make TikTok. Sleep 2 hours. Watch chart.</p>
+            </div>
+        </div>
+        <div class="roadmap-item fade-in">
+            <div class="roadmap-dot">2</div>
+            <div class="roadmap-content">
+                <h3>Phase Two: Graduate</h3>
+                <p>Hit $69K market cap. Move to PumpSwap. Fees jump to 0.95%. Celebrate with instant noodles.</p>
+            </div>
+        </div>
+        <div class="roadmap-item fade-in">
+            <div class="roadmap-dot">3</div>
+            <div class="roadmap-content">
+                <h3>Phase Three: Moon or Dust</h3>
+                <p>Either $ZRISK hits $1M and we make a documentary, or it dies in 48 hours and we do it all again. Zero risk, remember?</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="social-links">
+            <a href="https://x.com/zrisk_coin" target="_blank" class="social-link" title="Twitter">X</a>
+            <a href="#" class="social-link" title="Telegram">TG</a>
+            <a href="#" class="social-link" title="Discord">DC</a>
+            <a href="https://pump.fun" target="_blank" class="social-link" title="Pump.fun">PF</a>
+        </div>
+        <p class="disclaimer">
+            <span>DISCLAIMER:</span> $ZRISK is a memecoin with zero utility, zero roadmap, and zero promises. 
+            The creator earns fees from every trade. This is not financial advice. 
+            This is a social experiment. Only risk what you can afford to lose. 
+            Preferably $0.01 like the creator did.
+        </p>
+    </footer>
+
+    <script>
+        // Particles
+        const particlesContainer = document.getElementById('particles');
+        const colors = ['#39FF14', '#FF00AA', '#9D00FF', '#FFD700'];
+        for (let i = 0; i < 50; i++) {
+            const p = document.createElement('div');
+            p.className = 'particle';
+            p.style.left = Math.random() * 100 + '%';
+            p.style.animationDelay = Math.random() * 15 + 's';
+            p.style.animationDuration = (10 + Math.random() * 10) + 's';
+            const c = colors[Math.floor(Math.random() * colors.length)];
+            p.style.background = c;
+            p.style.boxShadow = `0 0 10px ${c}`;
+            particlesContainer.appendChild(p);
+        }
+
+        // Scroll animations
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+        }, { threshold: 0.1 });
+        document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+
+        // Copy CA
+        function copyCA() {
+            const ca = document.getElementById('ca').textContent.trim();
+            if (ca.includes('DEPLOY')) return;
+            navigator.clipboard.writeText(ca).then(() => {
+                document.getElementById('ca').textContent = 'COPIED!';
+                document.getElementById('ca').style.color = '#39FF14';
+                setTimeout(() => {
+                    document.getElementById('ca').textContent = ca;
+                    document.getElementById('ca').style.color = '';
+                }, 2000);
+            });
+        }
+
+        // Buy button
+        document.getElementById('buyBtn').addEventListener('click', (e) => {
+            e.preventDefault();
+            const ca = document.getElementById('ca').textContent.trim();
+            if (ca.includes('DEPLOY')) {
+                alert('Deploy the token first on Pump.fun, then paste the contract address here!');
+            } else {
+                window.open(`https://pump.fun/${ca}`, '_blank');
+            }
+        });
+
+        // Logo fallback
+        document.getElementById('logoImg').addEventListener('error', function() {
+            this.style.background = 'linear-gradient(135deg, #FFD700, #39FF14)';
+            this.style.display = 'flex';
+            this.style.alignItems = 'center';
+            this.style.justifyContent = 'center';
+            this.style.fontFamily = 'Space Mono, monospace';
+            this.style.fontSize = '4rem';
+            this.style.fontWeight = '900';
+            this.style.color = '#000';
+            this.innerHTML = '0';
+        });
+    </script>
+</body>
+</html>
