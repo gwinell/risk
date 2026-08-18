@@ -436,13 +436,13 @@
         
         <div class="cta-buttons">
             <a href="#" class="btn btn-primary" id="buyBtn">BUY $ZRISK</a>
-            <a href="https://pump.fun" target="_blank" class="btn btn-secondary">VIEW ON PUMP.FUN</a>
+            <a href="https://pump.fun/3udg2aCnytEvG92ejLNRcKdjj6jQHFbAvJZPhJE6pump" target="_blank" class="btn btn-secondary">VIEW ON PUMP.FUN</a>
         </div>
         
         <div class="contract-box">
             <div class="contract-label">Token Contract Address</div>
             <div class="contract-address" id="ca" onclick="copyCA()">
-                [DEPLOY TO SEE ADDRESS]
+                3udg2aCnytEvG92ejLNRcKdjj6jQHFbAvJZPhJE6pump
             </div>
             <div class="contract-hint">Click to copy &bull; Paste into Phantom to swap</div>
         </div>
@@ -554,7 +554,7 @@
             <a href="https://x.com/zrisk_coin" target="_blank" class="social-link" title="Twitter">X</a>
             <a href="#" class="social-link" title="Telegram">TG</a>
             <a href="#" class="social-link" title="Discord">DC</a>
-            <a href="https://pump.fun" target="_blank" class="social-link" title="Pump.fun">PF</a>
+            <a href="https://pump.fun/3udg2aCnytEvG92ejLNRcKdjj6jQHFbAvJZPhJE6pump" target="_blank" class="social-link" title="Pump.fun">PF</a>
         </div>
         <p class="disclaimer">
             <span>DISCLAIMER:</span> $ZRISK is a memecoin with zero utility, zero roadmap, and zero promises. 
@@ -589,7 +589,6 @@
         // Copy CA
         function copyCA() {
             const ca = document.getElementById('ca').textContent.trim();
-            if (ca.includes('DEPLOY')) return;
             navigator.clipboard.writeText(ca).then(() => {
                 document.getElementById('ca').textContent = 'COPIED!';
                 document.getElementById('ca').style.color = '#39FF14';
@@ -603,12 +602,7 @@
         // Buy button
         document.getElementById('buyBtn').addEventListener('click', (e) => {
             e.preventDefault();
-            const ca = document.getElementById('ca').textContent.trim();
-            if (ca.includes('DEPLOY')) {
-                alert('Deploy the token first on Pump.fun, then paste the contract address here!');
-            } else {
-                window.open(`https://pump.fun/${ca}`, '_blank');
-            }
+            window.open('https://pump.fun/3udg2aCnytEvG92ejLNRcKdjj6jQHFbAvJZPhJE6pump', '_blank');
         });
 
         // Logo fallback
